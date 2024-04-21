@@ -79,13 +79,13 @@ public class Employee {
     }
 
     public int calculateAnnualIncomeTax() {
-        LocalDate date = LocalDate.now();
-        if (date.getYear() == yearJoined) {
-            monthWorkingInYear = date.getMonthValue() - monthJoined;
-        } else {
-            monthWorkingInYear = 12;
-        }
+        calculateMonthWorkingInYear();
         return calculateTax();
+    }
+
+    private void calculateMonthWorkingInYear() {
+        LocalDate date = LocalDate.now();
+        monthWorkingInYear = (date.getYear() == yearJoined) ? date.getMonthValue() - monthJoined : 12;
     }
 
     private int calculateTax() {
