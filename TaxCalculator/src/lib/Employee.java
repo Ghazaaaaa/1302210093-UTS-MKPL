@@ -44,12 +44,6 @@ public class Employee {
         childIdNumbers = new LinkedList<>();
     }
 
-    /**
-     * Set the monthly salary of the employee based on their grade.
-     * If the employee is a foreigner, increase the monthly salary by 50%.
-     * 
-     * @param grade The grade of the employee (1, 2, or 3)
-     */
     public void setMonthlySalary(int grade) {
         switch (grade) {
             case 1:
@@ -84,13 +78,19 @@ public class Employee {
         childIdNumbers.add(childIdNumber);
     }
 
-    public int getAnnualIncomeTax() {
+    public int calculateAnnualIncomeTax() {
         LocalDate date = LocalDate.now();
         if (date.getYear() == yearJoined) {
             monthWorkingInYear = date.getMonthValue() - monthJoined;
         } else {
             monthWorkingInYear = 12;
         }
-        return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
+        return calculateTax();
+    }
+
+    private int calculateTax() {
+        // Lakukan perhitungan pajak di sini
+        // Gunakan monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber, childIdNumbers
+        return 0;
     }
 }
