@@ -1,8 +1,8 @@
 public class TaxFunction {
 
-    public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-        validateInput(numberOfMonthWorking, numberOfChildren);
-        int taxableIncome = calculateTaxableIncome(monthlySalary, otherMonthlyIncome, numberOfMonthWorking, deductible, isMarried, numberOfChildren);
+    public static int calculateTax(Employee employee) {
+        validateInput(employee.getMonthWorkingInYear(), employee.getNumChildren());
+        int taxableIncome = calculateTaxableIncome(employee);
         return Math.max(0, Math.round(0.05 * taxableIncome));
     }
 
@@ -15,17 +15,17 @@ public class TaxFunction {
         }
     }
 
-    private static int calculateTaxableIncome(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-        int taxExemption = calculateTaxExemption(isMarried, numberOfChildren);
-        return ((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - taxExemption;
+    private static int calculateTaxableIncome(Employee employee) {
+        int taxExemption = calculateTaxExemption(employee);
+        return ((employee.getMonthlySalary() + employee.getOtherMonthlyIncome()) * employee.getMonthWorkingInYear()) - employee.getAnnualDeductible() - taxExemption;
     }
 
-    private static int calculateTaxExemption(boolean isMarried, int numberOfChildren) {
+    private static int calculateTaxExemption(Employee employee) {
         int taxExemption = 54000000;
-        if (isMarried) {
+        if (employee.isMarried()) {
             taxExemption += 4500000;
         }
-        taxExemption += numberOfChildren * 1500000;
+        taxExemption += employee.getNumChildren() * 1500000;
         return taxExemption;
     }
 }
